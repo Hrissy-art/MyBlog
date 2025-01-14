@@ -20,7 +20,6 @@ public class CategoryController {
         this.categoryRepository = categoryRepository;
     }
 
-    // GET /categories - Récupérer toutes les catégories
     @GetMapping
     public ResponseEntity<List<Category>> getAllCategories() {
         List<Category> categories = categoryRepository.findAll();
@@ -29,8 +28,6 @@ public class CategoryController {
         }
         return ResponseEntity.ok(categories);
     }
-
-    // GET /categories/{id} - Récupérer une catégorie par ID
     @GetMapping("/{id}")
     public ResponseEntity<Category> getCategoryById(@PathVariable Long id) {
         Category category = categoryRepository.findById(id).orElse(null);
@@ -40,7 +37,6 @@ public class CategoryController {
         return ResponseEntity.ok(category);
     }
 
-    // POST /categories - Créer une nouvelle catégorie
     @PostMapping
     public ResponseEntity<Category> createCategory(@RequestBody Category category) {
         if (category.getName() == null || category.getName().isEmpty()) {
@@ -49,8 +45,6 @@ public class CategoryController {
         Category savedCategory = categoryRepository.save(category);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
     }
-
-    // PUT /categories/{id} - Mettre à jour une catégorie existante
     @PutMapping("/{id}")
     public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category categoryDetails) {
         Category category = categoryRepository.findById(id).orElse(null);
@@ -61,8 +55,6 @@ public class CategoryController {
         Category updatedCategory = categoryRepository.save(category);
         return ResponseEntity.ok(updatedCategory);
     }
-
-    // DELETE /categories/{id} - Supprimer une catégorie
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         Category category = categoryRepository.findById(id).orElse(null);

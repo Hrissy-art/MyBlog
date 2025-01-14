@@ -45,7 +45,6 @@ public class ArticleController {
     public ResponseEntity<Article> createArticle(@RequestBody Article article) {
         article.setCreatedAt(LocalDateTime.now());
         article.setUpdatedAt(LocalDateTime.now());
-        // Ajout de la catégorie
         if (article.getCategory() != null) {
             Category category = categoryRepository.findById(article.getCategory().getId()).orElse(null);
             if (category == null) {
@@ -67,7 +66,6 @@ public class ArticleController {
         article.setTitle(articleDetails.getTitle());
         article.setContent(articleDetails.getContent());
         article.setUpdatedAt(LocalDateTime.now());
-// Mise à jour de la catégorie
         if (articleDetails.getCategory() != null) {
             Category category = categoryRepository.findById(articleDetails.getCategory().getId()).orElse(null);
             if (category == null) {
