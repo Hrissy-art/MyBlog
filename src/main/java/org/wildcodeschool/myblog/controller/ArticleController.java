@@ -70,4 +70,22 @@ public class ArticleController {
         return ResponseEntity.noContent().build();
     }
 
+    //example postman http://localhost:8080/articles/searchContent?content=edited
+    @GetMapping("/searchContent")
+    public List<Article> getArticlesContent(@RequestParam String content) {
+
+        return articleRepository.findByCaracters(content);
+    }
+//example : http://localhost:8080/articles/createdAfter?date=2023-01-01T10:00:00
+    @GetMapping("/createdAfter")
+    public List<Article> getArticlesCreatedAt(@RequestParam String date) {
+        LocalDateTime localDate = LocalDateTime.parse(date);
+        return articleRepository.findByCreatedAt(localDate);
+    }
+
+    @GetMapping("/lastArticles")
+    public List<Article> getFiveLastArt() {
+        return articleRepository.findTop5ByOrderByCreatedAtDesc();
+    }
+
 }
