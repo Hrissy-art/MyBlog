@@ -1,6 +1,7 @@
 package org.wildcodeschool.myblog.dto;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class ArticleDTO {
     private Long id;
@@ -8,6 +9,7 @@ public class ArticleDTO {
     private String content;
     private LocalDateTime updatedAt;
     private String categoryName;
+    private List<String> imageUrls;
 
     // Getters et setters
 
