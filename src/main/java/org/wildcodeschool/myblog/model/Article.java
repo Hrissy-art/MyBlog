@@ -36,6 +36,9 @@ public class Article {
     )
     private List<Image> images;
 
+    @OneToMany(mappedBy = "article")
+    private List<ArticleAuthor> articleAuthors;
+
     // Getters et setters
 
     public Long getId() {
@@ -90,5 +93,12 @@ public class Article {
 
     public void setImages(List<Image> images) {
         this.images = images;
+    }
+    public List<ArticleAuthor> getArticleAuthors() {
+        return articleAuthors;
+    }
+
+    public void setArticleAuthors(List<ArticleAuthor> articleAuthors) {
+        this.articleAuthors = articleAuthors;
     }
 }
