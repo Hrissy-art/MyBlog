@@ -1,4 +1,6 @@
 package org.wildcodeschool.myblog.controller;
+import jakarta.validation.Valid;
+import org.wildcodeschool.myblog.dto.ArticleCreateDTO;
 import org.wildcodeschool.myblog.dto.ArticleDTO; // Assure-toi que c'est bien cette classe qui est importée
 import org.wildcodeschool.myblog.model.Article;  // Pour l'entité Article
 import org.wildcodeschool.myblog.service.ArticleService;  // Le service pour gérer les articles
@@ -49,9 +51,9 @@ public class ArticleController {
     }
 
     @PostMapping
-    public ResponseEntity<ArticleDTO> createArticle(@RequestBody Article article) {
-        ArticleDTO savedArticle = articleService.createArticle(article);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedArticle);
+    public ResponseEntity<ArticleDTO> createArticle(@Valid @RequestBody ArticleCreateDTO articleCreateDTO) {
+        ArticleDTO savedArticleDTO = articleService.createArticle(articleCreateDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedArticleDTO);
     }
 
     @PutMapping("/{id}")

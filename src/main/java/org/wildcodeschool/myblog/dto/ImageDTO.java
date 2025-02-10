@@ -1,9 +1,13 @@
 package org.wildcodeschool.myblog.dto;
 
+
+import org.hibernate.validator.constraints.URL;
+
 import java.util.List;
 
 public class ImageDTO {
     private Long id;
+
     private String url;
     private List<Long> articlesIds;
 
