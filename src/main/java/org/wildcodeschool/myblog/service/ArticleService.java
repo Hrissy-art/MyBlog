@@ -2,6 +2,7 @@ package org.wildcodeschool.myblog.service;
 
 import org.springframework.stereotype.Service;
 import org.wildcodeschool.myblog.dto.ArticleDTO;
+import org.wildcodeschool.myblog.exception.InvalidCategoryException;
 import org.wildcodeschool.myblog.exception.ResourceNotFoundException;
 import org.wildcodeschool.myblog.mapper.ArticleMapper;
 import org.wildcodeschool.myblog.model.*;
@@ -56,7 +57,7 @@ public class ArticleService {
         if (article.getCategory() != null) {
             Category category = categoryRepository.findById(article.getCategory().getId()).orElse(null);
             if (category == null) {
-                return null;
+                throw new InvalidCategoryException("La catégorie avec l'ID numéro " + article.getCategory().getId() + " n'existe pas.");
             }
             article.setCategory(category);
         }
