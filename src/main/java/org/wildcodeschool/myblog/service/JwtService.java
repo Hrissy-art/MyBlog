@@ -20,6 +20,9 @@ public class JwtService {
     @Value("${security.jwt.expiration-time}")
     private long jwtExpiration;
 
+    //@Value("${security.jwt.refresh-expiration-time}")
+    //private long// refreshTokenExpiration; // Le temps d'expiration du refresh token
+
     public String generateToken(UserDetails userDetails) {
         return Jwts.builder()
                 .setSubject(userDetails.getUsername())
@@ -29,6 +32,17 @@ public class JwtService {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
     }
+
+    // Méthode pour générer un Refresh Token
+    //public String generateRefreshToken(UserDetails userDetails) {
+        //return Jwts.builder()
+                //.setSubject(userDetails.getUsername())
+                //.claim("roles", userDetails.getAuthorities())
+                //.setIssuedAt(new Date())
+                //.setExpiration(new Date(System.currentTimeMillis() + refreshTokenExpiration)) // Expiration plus longue pour le refresh token
+                //.signWith(SignatureAlgorithm.HS256, secretKey)
+                //.compact();
+    //}
 
     public Claims extractClaims(String token) {
         return Jwts.parser()

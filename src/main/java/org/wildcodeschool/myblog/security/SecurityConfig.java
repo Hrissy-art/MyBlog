@@ -2,6 +2,7 @@ package org.wildcodeschool.myblog.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -26,8 +27,12 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(HttpMethod.GET, "/articles/**").permitAll() // Autoriser tous les utilisateurs à lire les articles
+                        .requestMatchers(HttpMethod.POST, "/articles/**").hasRole("ADMIN") // Seuls les admins peuvent créer des articles
+                        .requestMatchers(HttpMethod.PUT, "/articles/**").hasRole("ADMIN") // Seuls les admins peuvent mettre à jour des articles
+                        .requestMatchers(HttpMethod.DELETE, "/articles/**").hasRole("ADMIN") // Seuls les admins peuvent supprimer des articles
                         .requestMatchers("/auth/**").permitAll() // Permettre l'accès public aux endpoints sous /auth/
-                        .anyRequest().authenticated() // Tous les autres endpoints nécessitent une authentification
+                        .anyRequest().authenticated() // Toutes les autres requêtes nécessitent une authentification
                 )
                 .userDetailsService(customUserDetailsService)
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
